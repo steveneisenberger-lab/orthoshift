@@ -700,7 +700,7 @@ function CalendarManager({ offices }) {
               {cells.map((cell, i) => {
                 const ds  = toISO(cell.date)
                 const dow = cell.date.getDay()
-                const isWe  = dow === 0 || dow === 6
+                const isWe  = dow === 6
                 const isTod = ds === today
                 const isSel = ds === selDate
                 const cnt   = openCount(ds)
