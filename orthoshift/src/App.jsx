@@ -226,7 +226,39 @@ const css = `
   .load{min-height:100vh;display:flex;align-items:center;justify-content:center;background:${C.navy};font-family:'Syne',sans-serif;font-size:18px;color:${C.teal};}
 
   @media(max-width:1100px){.cmw{grid-template-columns:1fr;}}
-  @media(max-width:900px){.sb{display:none;}.mn{margin-left:0;padding:20px;}.sg{grid-template-columns:repeat(2,1fr);}.ag,.dg{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:768px){
+    .sb{display:none;}
+    .mn{margin-left:0;padding:16px;padding-bottom:80px;}
+    .sg{grid-template-columns:repeat(2,1fr);gap:10px;}
+    .ag,.dg{grid-template-columns:repeat(2,1fr);}
+    .tt{font-size:20px;}
+    .topb{margin-bottom:20px;}
+    .dp{display:none;}
+    .hr{padding:20px;flex-direction:column;gap:16px;}
+    .hpv{font-size:36px;}
+    .tabs{overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;}
+    .tab{white-space:nowrap;flex-shrink:0;}
+    .msr{flex-wrap:wrap;gap:10px;}
+    .stcal{overflow-x:auto;}
+    .stch,.stcr{min-width:480px;}
+    .cmw{grid-template-columns:1fr;}
+    .swr{flex-direction:column;align-items:flex-start;gap:12px;}
+    .swb{width:100%;justify-content:flex-end;}
+    .sc{padding:14px 16px;}
+    .scv{font-size:24px;}
+    .dg{grid-template-columns:1fr;}
+    .cd{overflow-x:auto;}
+    .tl{min-width:500px;}
+  }
+  /* MOBILE BOTTOM NAV */
+  .bnav{display:none;}
+  @media(max-width:768px){
+    .bnav{display:flex;position:fixed;bottom:0;left:0;right:0;background:${C.navyMid};border-top:1px solid ${C.border};z-index:100;padding:8px 0;padding-bottom:calc(8px + env(safe-area-inset-bottom));}
+    .bni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;border:none;background:none;color:${C.gray};font-size:9px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;position:relative;}
+    .bni.act{color:${C.teal};}
+    .bni-ic{font-size:20px;line-height:1;}
+    .bni-bd{position:absolute;top:4px;right:calc(50% - 14px);background:${C.red};color:white;font-size:9px;font-weight:700;padding:1px 5px;border-radius:10px;min-width:16px;text-align:center;}
+  }
 `
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
@@ -1066,6 +1098,33 @@ export default function App() {
             {isAdmin && page === 'assistants' && <Assistants />}
             {!isAdmin && <Portal profile={profile} offices={offices} />}
           </main>
+
+          {/* MOBILE BOTTOM NAV */}
+          <nav className="bnav">
+            {isAdmin ? adminNav.map(n => (
+              <button key={n.id} className={'bni' + (page === n.id ? ' act' : '')} onClick={() => setPage(n.id)}>
+                <span className="bni-ic">{n.icon}</span>
+                <span>{n.label}</span>
+              </button>
+            )) : (
+              <>
+                <button className="bni act">
+                  <span className="bni-ic">📅</span>
+                  <span>Schedule</span>
+                </button>
+                <button className="bni" onClick={logout}>
+                  <span className="bni-ic">🚪</span>
+                  <span>Sign Out</span>
+                </button>
+              </>
+            )}
+            {isAdmin && (
+              <button className="bni" onClick={logout}>
+                <span className="bni-ic">🚪</span>
+                <span>Out</span>
+              </button>
+            )}
+          </nav>
         </div>
       </div>
     </>
