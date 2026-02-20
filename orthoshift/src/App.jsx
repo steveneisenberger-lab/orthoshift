@@ -146,8 +146,8 @@ const css = `
   .cdy.om{opacity:.3;} .cdy.we{opacity:.35;cursor:default;}
   .cdn{font-size:12px;font-weight:600;color:${C.gray};margin-bottom:3px;}
   .cdy.sel .cdn{color:${C.teal};} .cdy.tod .cdn{color:${C.teal};font-weight:800;}
-  .cdts{display:flex;flex-wrap:wrap;gap:2px;}
-  .cdt{width:6px;height:6px;border-radius:50%;background:${C.teal};}
+  .cdts{display:flex;flex-wrap:wrap;gap:2px;margin-top:3px;}
+  .cdab{font-size:8px;font-weight:700;color:${C.teal};background:${C.tealDim};padding:1px 4px;border-radius:3px;letter-spacing:.3px;}
   .coc{position:absolute;bottom:4px;right:5px;font-size:9px;font-weight:700;color:${C.gray};}
   .pnl{background:${C.navyMid};border:1px solid ${C.border};border-radius:14px;position:sticky;top:20px;}
   .pnh{padding:18px 20px;border-bottom:1px solid ${C.border};}
@@ -709,10 +709,11 @@ function CalendarManager({ offices }) {
                   <div key={i} className={cls} onClick={() => cell.cur && !isWe && pickDate(ds)}>
                     <div className="cdn">{cell.date.getDate()}</div>
                     {cell.cur && !isWe && cnt > 0 && (
-                      <>
-                        <div className="cdts">{Array.from({length: Math.min(cnt,6)}).map((_,k) => <div key={k} className="cdt"/>)}</div>
-                        <div className="coc">{cnt}/{offices.length}</div>
-                      </>
+                      <div className="cdts">
+                        {Object.keys(calData[ds] || {}).filter(k => calData[ds][k].open).map(abbr => (
+                          <span key={abbr} className="cdab">{abbr}</span>
+                        ))}
+                      </div>
                     )}
                   </div>
                 )
